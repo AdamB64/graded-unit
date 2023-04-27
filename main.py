@@ -22,17 +22,25 @@ def saved():
     user=tb1.value
     ws.cell(row=c,column=1,value=tb1.value)
     ws.cell(row=c,column=2,value=tb2.value)
+    c=c+1
+    ws.cell(row=1,column=3,value=c)
     wb.save('users.xlsx')
     wb2=openpyxl.Workbook(tb1.value+".xlsx")
     wb2.save(tb1.value+".xlsx")
 
 def close():
     global c
+    c=ws.cell(row=1,column=3).value
+    if c==None:
+        c=1
     row_position = 1
     for row_position in range(1, ws.max_row+1):
         print(ws.cell(row=row_position,column=1).value)
         if ws.cell(row=row_position,column=1).value!="":
-            c =c+1
+            c=c+1
+            print(c)
+        elif ws.cell(row=row_position,column=1).value==None:
+            c=1
             print(c)
     ws.cell(row=1,column=3,value=c)
     wb.save('users.xlsx')
@@ -72,7 +80,7 @@ def login():
             c4=True
         count2=count2+1
     if(c1==c3) and (c2==c4):
-        print()
+        print("yes")
 
 t1=Text(app,text="Do you have an account")
 b1=PushButton(app,text="I do not have a account and would like to join",command=signUp)

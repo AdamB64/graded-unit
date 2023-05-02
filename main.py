@@ -4,30 +4,49 @@ import openpyxl
 wb = openpyxl.load_workbook('users.xlsx')
 ws=wb.active
 user=None
-c=1
+c=ws.cell(row=1,column=3).value
+if c==None:
+    c=0
 app=App(title="Budget Planner")
 app2=Window(app,title="Sign up")
 app3=Window(app,title="Login")
+app4=Window(app,title="error")    
+app5=Window(app,title="Error")
 
 def signUp():
+    app4.hide()
     app.hide()
     app2.show()
+    app5.hide()
 def saved():
     global c
     c=ws.cell(row=1,column=3).value
     if c==None:
         c=1
-    print(c)
     global user
-    user=tb1.value
-    ws.cell(row=c,column=1,value=tb1.value)
-    ws.cell(row=c,column=2,value=tb2.value)
-    c=c+1
-    ws.cell(row=1,column=3,value=c)
-    wb.save('users.xlsx')
-    wb2=openpyxl.Workbook(tb1.value+".xlsx")
-    wb2.save(tb1.value+".xlsx")
-
+    count=0
+    tr=False
+    if tb1.value=="" or tb2.value=="":
+        app2.hide()
+        app4.show()
+    while count<1:
+        for row_pow in range(1,ws.max_row+1):
+            b=ws.cell(row=row_pow,column=1).value
+            if tb1.value==b:
+                app2.hide()
+                app5.show()
+                count=1
+                tr=True
+        count=1
+    if (tb1.value!="" and tb2.value!="") and tr==False:
+        user=tb1.value
+        ws.cell(row=c,column=1,value=tb1.value)
+        ws.cell(row=c,column=2,value=tb2.value)
+        c=c+1
+        ws.cell(row=1,column=3,value=c)
+        wb.save('users.xlsx')
+        wb2=openpyxl.Workbook(tb1.value+".xlsx")
+        wb2.save(tb1.value+".xlsx")
 def close():
     global c
     c=ws.cell(row=1,column=3).value
@@ -36,12 +55,7 @@ def close():
     row_position = 1
     for row_position in range(1, ws.max_row+1):
         print(ws.cell(row=row_position,column=1).value)
-        if ws.cell(row=row_position,column=1).value!="":
-            c=c+1
-            print(c)
-        elif ws.cell(row=row_position,column=1).value==None:
-            c=1
-            print(c)
+        print(c)
     ws.cell(row=1,column=3,value=c)
     wb.save('users.xlsx')
     exit()
@@ -101,6 +115,12 @@ tb4=TextBox(app3)
 b3=PushButton(app3,text="login",command=login)
 home2=PushButton(app3,text="Home screen",command=home)
 exit3=PushButton(app3,text="Exit",command=close)
+t6=Text(app4,text="password or user name muse be filled in ")
+tb5=PushButton(app4,text="Ok",command=signUp)
+t7=Text(app5,text="Username is in use")
+tb6=PushButton(app5,text="Ok",command=signUp)
+app5.hide()
+app4.hide()
 app2.hide()
 app3.hide()
 app.display()

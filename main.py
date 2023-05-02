@@ -1,17 +1,18 @@
 from guizero import *
 from openpyxl import Workbook
 import openpyxl
+user="he"
 wb = openpyxl.load_workbook('users.xlsx')
 ws=wb.active
-user=None
 c=ws.cell(row=1,column=3).value
 if c==None:
     c=0
 app=App(title="Budget Planner")
 app2=Window(app,title="Sign up")
 app3=Window(app,title="Login")
-app4=Window(app,title="error")    
-app5=Window(app,title="Error")
+app4=Window(app,title="error",height=50,width=300)    
+app5=Window(app,title="Error",height=50,width=300)
+app6=Window(app,title="Logged in")
 
 def signUp():
     app4.hide()
@@ -23,7 +24,6 @@ def saved():
     c=ws.cell(row=1,column=3).value
     if c==None:
         c=1
-    global user
     count=0
     tr=False
     if tb1.value=="" or tb2.value=="":
@@ -39,7 +39,6 @@ def saved():
                 tr=True
         count=1
     if (tb1.value!="" and tb2.value!="") and tr==False:
-        user=tb1.value
         ws.cell(row=c,column=1,value=tb1.value)
         ws.cell(row=c,column=2,value=tb2.value)
         c=c+1
@@ -47,15 +46,12 @@ def saved():
         wb.save('users.xlsx')
         wb2=openpyxl.Workbook(tb1.value+".xlsx")
         wb2.save(tb1.value+".xlsx")
+    
 def close():
     global c
     c=ws.cell(row=1,column=3).value
     if c==None:
         c=1
-    row_position = 1
-    for row_position in range(1, ws.max_row+1):
-        print(ws.cell(row=row_position,column=1).value)
-        print(c)
     ws.cell(row=1,column=3,value=c)
     wb.save('users.xlsx')
     exit()
@@ -69,32 +65,41 @@ def loginScreen():
     app.hide()
     app2.hide()
     app3.show()
+
     
 
 def login():
+    global user
+    user= tb3.value
+    t8.append(text=tb3.value)
+    t8.hide()
     c1=0
     c2=False
     c3=0
     c4=False
     count=0
     count2=0
-    global user
-    user=tb3.value
-    ws=wb.active
-    for row in ws['A']:
+    for row_pow2 in range(1,ws.max_row+1):
             c1=count
-            if row.value == tb3.value:
+            col=ws.cell(row=row_pow2,column=1).value
+            if col==tb3.value:
                 c2=True
                 count=count+1
-            elif row.value!=tb3.value or (row.value==None or row.value==""):
-                c2=True
-    for row in ws["B"]:
+            elif col!=tb3.value or (col==None or col==""):
+                c2=False
+    for row_pow3 in range(1,ws.max_row+1):
+        col2=ws.cell(row=row_pow3,column=2).value
         c3=count2
-        if row.value==tb4.value:
+        if col2==tb4.value:
             c4=True
-        count2=count2+1
-    if(c1==c3) and (c2==c4):
-        print("yes")
+            count2=count2+2887
+    if(c1==c3) and (c2==True)and (c4==True):
+        app6.show()
+        app3.hide()
+
+
+def incomescreen():
+    pass
 
 t1=Text(app,text="Do you have an account")
 b1=PushButton(app,text="I do not have a account and would like to join",command=signUp)
@@ -115,11 +120,15 @@ tb4=TextBox(app3)
 b3=PushButton(app3,text="login",command=login)
 home2=PushButton(app3,text="Home screen",command=home)
 exit3=PushButton(app3,text="Exit",command=close)
-t6=Text(app4,text="password or user name muse be filled in ")
+t6=Text(app4,text="password or user name must be filled in ")
 tb5=PushButton(app4,text="Ok",command=signUp)
 t7=Text(app5,text="Username is in use")
 tb6=PushButton(app5,text="Ok",command=signUp)
+t8=Text(app6)
+t9=Text(app6,text="hello "+t8.value)
+b4=PushButton(app6,text="add income",command=incomescreen)
 app5.hide()
+app6.hide()
 app4.hide()
 app2.hide()
 app3.hide()

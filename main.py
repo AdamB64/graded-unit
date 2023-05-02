@@ -1,7 +1,6 @@
 from guizero import *
 from openpyxl import Workbook
 import openpyxl
-user="he"
 wb = openpyxl.load_workbook('users.xlsx')
 ws=wb.active
 c=ws.cell(row=1,column=3).value
@@ -13,6 +12,7 @@ app3=Window(app,title="Login")
 app4=Window(app,title="error",height=50,width=300)    
 app5=Window(app,title="Error",height=50,width=300)
 app6=Window(app,title="Logged in")
+app7=Window(app,title="Income")
 
 def signUp():
     app4.hide()
@@ -69,8 +69,6 @@ def loginScreen():
     
 
 def login():
-    global user
-    user= tb3.value
     t8.append(text=tb3.value)
     t8.hide()
     c1=0
@@ -99,7 +97,29 @@ def login():
 
 
 def incomescreen():
-    pass
+    app6.hide()
+    app7.show()
+
+def income():
+    c1=0
+    c2=0
+    c3=0
+    wb2=openpyxl.load_workbook(t8.value+".xlsx")
+    ws2=wb2.active
+    for row_p in range(1,ws.max_row+1):
+        A=ws2.cell(row=row_p,column=1).value
+        B=ws2.cell(row=row_p,column=2).value
+        C=ws2.cell(row=row_p,column=3).value
+        if (A==None or A=="") and c1==0:
+            ws2.cell(row=row_p,column=1,value=tb5.value)
+            c1=+1
+        if (B==None or B=="") and c2==0:
+            ws2.cell(row=row_p,column=2,value=tb6.value)
+            c2=+1
+        if (C==None or C=="") and c3==0:
+            ws2.cell(row=row_p,column=3,value=tb7.value)
+            c3=+1
+    wb2.save(t8.value+".xlsx")
 
 t1=Text(app,text="Do you have an account")
 b1=PushButton(app,text="I do not have a account and would like to join",command=signUp)
@@ -124,11 +144,22 @@ t6=Text(app4,text="password or user name must be filled in ")
 tb5=PushButton(app4,text="Ok",command=signUp)
 t7=Text(app5,text="Username is in use")
 tb6=PushButton(app5,text="Ok",command=signUp)
-t8=Text(app6)
-t9=Text(app6,text="hello "+t8.value)
+exit4=PushButton(app6,text="Exit",command=close)
+t9=Text(app7)
 b4=PushButton(app6,text="add income",command=incomescreen)
+t8=Text(app6)
+t10=Text(app7,text="you should type in the amount of income \ngotten and when you got it \nand if you want a description")
+t11=Text(app7,text="income")
+tb5=TextBox(app7)
+t12=Text(app7,text="Date")
+tb6=TextBox(app7)
+t13=Text(app7,text="Description")
+tb7=TextBox(app7)
+add=PushButton(app7,text="Add the income",command=income)
+exit5=PushButton(app7,text="Exit",command=close)
 app5.hide()
 app6.hide()
+app7.hide()
 app4.hide()
 app2.hide()
 app3.hide()

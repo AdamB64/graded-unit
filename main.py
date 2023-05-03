@@ -113,7 +113,8 @@ def login():
             if col==tb3.value:
                 c2=True
                 count=count+1
-            elif col!=tb3.value or (col==None or col==""):
+                break
+            elif col!=tb3.value:
                 c2=False
     for row_pow3 in range(1,ws.max_row+1):
         col2=ws.cell(row=row_pow3,column=2).value
@@ -121,7 +122,8 @@ def login():
         if col2==tb4.value:
             c4=True
             count2=count2+1
-    if(c1==c3) and (c2==True)and (c4==True):
+            break
+    if(c1==c3) and (c2==c4):
         app6.show()
         app3.hide()
 
@@ -165,7 +167,7 @@ def income():
 def expensesscreen():
     app10.show()
     app6.hide()
-    app11.hise()
+    app11.hide()
 
 def expenses():
     if (tb10.value==""or tb11.value==""):
@@ -240,7 +242,7 @@ t8=Text(app6)
 t10=Text(app7,text="you should type in the amount of income \ngotten and when you got it \nand if you want a description")
 t11=Text(app7,text="income")
 tb5=TextBox(app7)
-t12=Text(app7,text="Date")
+t12=Text(app7,text="Date(In fotmat DD/MM/YYYY)")
 tb6=TextBox(app7)
 t13=Text(app7,text="Description")
 tb7=TextBox(app7)
@@ -261,7 +263,7 @@ tb13=PushButton(app11,text="Ok",command=expensesscreen )
 t14=Text(app10,text="Add your expenses the \ndate you paid it and if\n you want a description")
 t15=Text(app10,text="Expenses")
 tb10=TextBox(app10)
-t16=Text(app10,text="date")
+t16=Text(app10,text="date(in format DD/MM/YYYY)")
 tb11=TextBox(app10)
 t17=Text(app10,text="description")
 tb12=TextBox(app10)

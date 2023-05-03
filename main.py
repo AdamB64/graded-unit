@@ -1,6 +1,7 @@
 from guizero import *
 from openpyxl import Workbook
 import openpyxl
+import re
 wb = openpyxl.load_workbook('users.xlsx')
 ws=wb.active
 c=ws.cell(row=1,column=3).value
@@ -18,6 +19,9 @@ app9=Window(app,title="Error",height=50,width=300)
 app10=Window(app,title="Expenses")
 app11=Window(app,title="Error",height=50,width=300)
 app12=Window(app,title="show")
+app13=Window(app,title="Error",height=50,width=300)
+app14=Window(app,title="Error",height=50,width=300)
+
 
 def signUp():
     app4.hide()
@@ -136,9 +140,15 @@ def loggedIn():
 def incomescreen():
     app6.hide()
     app7.show()
+    app13.hide()
     app9.hide()
 
 def income():
+    date_pattern=r"^\d{2}/\d{2}/\d{4}$"
+    print(date_pattern)
+    if re.match(tb6.value,date_pattern):
+        app7.hide()
+        app13.show()
     if (tb5.value==""or tb6.value==""):
         app7.hide()
         app9.show()
@@ -168,8 +178,13 @@ def expensesscreen():
     app10.show()
     app6.hide()
     app11.hide()
+    app14.hide()
 
 def expenses():
+    date_pattern=r"^\d{2}/\d{2}/\d{4}$"
+    if re.match(tb11.value,date_pattern):
+        app10.hide()
+        app13.show()
     if (tb10.value==""or tb11.value==""):
         app10.hide()
         app11.show()
@@ -277,7 +292,15 @@ lst2=ListBox(app12,width=120,height="fill")
 home5=PushButton(app12,text="Home screen",command=loggedIn)
 exit6=PushButton(app12,text="Exit",command=close)
 
+t20=Text(app13,text="date must be in format DD/MM/YYYY")
+b8=PushButton(app13,text="Ok",command=incomescreen)
+
+t21=Text(app14,text="date must be in format DD/MM/YYYY")
+b9=PushButton(app14,text="ok",command=expensesscreen)
+
 app5.hide()
+app13.hide()
+app14.hide()
 app12.hide()
 app8.hide()
 app10.hide()

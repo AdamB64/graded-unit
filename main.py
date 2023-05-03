@@ -165,6 +165,7 @@ def income():
 def expensesscreen():
     app10.show()
     app6.hide()
+    app11.hise()
 
 def expenses():
     if (tb10.value==""or tb11.value==""):
@@ -254,6 +255,8 @@ b5=PushButton(app6,text="Add expensives",command=expensesscreen)
 b6=PushButton(app6,text="to show all incomes and expenses",command=show)
 home6=PushButton(app6,text="Home",command=home)
 exit4=PushButton(app6,text="Exit",command=close)
+t20=Text(app11,text="Must input expenses and date atleast")
+tb13=PushButton(app11,text="Ok",command=expensesscreen )
 
 t14=Text(app10,text="Add your expenses the \ndate you paid it and if\n you want a description")
 t15=Text(app10,text="Expenses")

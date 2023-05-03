@@ -13,19 +13,27 @@ app4=Window(app,title="error",height=50,width=300)
 app5=Window(app,title="Error",height=50,width=300)
 app6=Window(app,title="Logged in")
 app7=Window(app,title="Income")
+app8=Window(app,title="Error",height=50,width=300)
+app9=Window(app,title="Error",height=50,width=300)
+app10=Window(app,title="Expenses")
+app11=Window(app,title="Error",height=50,width=300)
 
 def signUp():
     app4.hide()
     app.hide()
     app2.show()
     app5.hide()
+    app8.hide()
+
 def saved():
     global c
     c=ws.cell(row=1,column=3).value
     if c==None:
         c=1
+    count2=0
     count=0
-    tr=False
+    ut=False
+    pt=False
     if tb1.value=="" or tb2.value=="":
         app2.hide()
         app4.show()
@@ -36,9 +44,18 @@ def saved():
                 app2.hide()
                 app5.show()
                 count=1
-                tr=True
+                ut=True
         count=1
-    if (tb1.value!="" and tb2.value!="") and tr==False:
+    while count2<1:
+        for row_pow2 in range(1,ws.max_row+1):
+            a=ws.cell(row=row_pow2,column=2).value
+            if tb2.value==a:
+                app2.hide()
+                app8.show()
+                count2=1
+                pt=True
+        count2=1
+    if tb1.value!="":
         ws.cell(row=c,column=1,value=tb1.value)
         ws.cell(row=c,column=2,value=tb2.value)
         c=c+1
@@ -69,6 +86,7 @@ def loginScreen():
     
 
 def login():
+    t8.clear()
     t8.append(text=tb3.value)
     t8.hide()
     c1=0
@@ -90,7 +108,7 @@ def login():
         c3=count2
         if col2==tb4.value:
             c4=True
-            count2=count2+2887
+            count2=count2+1
     if(c1==c3) and (c2==True)and (c4==True):
         app6.show()
         app3.hide()
@@ -99,27 +117,63 @@ def login():
 def incomescreen():
     app6.hide()
     app7.show()
+    app9.hide()
 
 def income():
-    c1=0
-    c2=0
-    c3=0
-    wb2=openpyxl.load_workbook(t8.value+".xlsx")
-    ws2=wb2.active
-    for row_p in range(1,ws.max_row+1):
-        A=ws2.cell(row=row_p,column=1).value
-        B=ws2.cell(row=row_p,column=2).value
-        C=ws2.cell(row=row_p,column=3).value
-        if (A==None or A=="") and c1==0:
-            ws2.cell(row=row_p,column=1,value=tb5.value)
-            c1=+1
-        if (B==None or B=="") and c2==0:
-            ws2.cell(row=row_p,column=2,value=tb6.value)
-            c2=+1
-        if (C==None or C=="") and c3==0:
-            ws2.cell(row=row_p,column=3,value=tb7.value)
-            c3=+1
-    wb2.save(t8.value+".xlsx")
+    if (tb5.value==""or tb6.value==""):
+        app7.hide()
+        app9.show()
+    else:
+        if tb7.value=="":
+            tb7.append(text="No Description")
+        t=0
+        wb3=openpyxl.load_workbook(t8.value+".xlsx")
+        ws2=wb3.active
+        for row_p in range(1,ws2.max_row+1):
+            a=ws2.cell(row=row_p,column=1).value
+            b=ws2.cell(row=row_p,column=2).value
+            c=ws2.cell(row=row_p,column=3).value
+            if a ==None or a==" ":
+                ws2.cell(row=row_p,column=1,value=tb5.value)
+            if b==None:
+                ws2.cell(row=row_p,column=2,value=tb6.value)
+            if c==None and t==0 :
+                ws2.cell(row=row_p,column=3,value=tb7.value)
+            ws2.cell(row=row_p+1,column=1,value=" ")
+            wb3.save(t8.value+".xlsx")
+        tb5.clear()
+        tb6.clear()
+        tb7.clear()
+    
+def expensesscreen():
+    app10.show()
+    app6.hide()
+
+def expenses():
+    if (tb10.value==""or tb11.value==""):
+        app10.hide()
+        app11.show()
+    else:
+        if tb12.value=="":
+            tb12.append(text="No Description")
+        t=0
+        wb3=openpyxl.load_workbook(t8.value+".xlsx")
+        ws2=wb3.active
+        for row_p in range(1,ws2.max_row+1):
+            a=ws2.cell(row=row_p,column=4).value
+            b=ws2.cell(row=row_p,column=5).value
+            c=ws2.cell(row=row_p,column=6).value
+            if a ==None or a==" ":
+                ws2.cell(row=row_p,column=4,value=tb10.value)
+            if b==None:
+                ws2.cell(row=row_p,column=5,value=tb11.value)
+            if c==None and t==0 :
+                ws2.cell(row=row_p,column=6,value=tb12.value)
+            ws2.cell(row=row_p+1,column=1,value=" ")
+            wb3.save(t8.value+".xlsx")
+        tb10.clear()
+        tb11.clear()
+        tb12.clear()
 
 t1=Text(app,text="Do you have an account")
 b1=PushButton(app,text="I do not have a account and would like to join",command=signUp)
@@ -143,24 +197,43 @@ exit3=PushButton(app3,text="Exit",command=close)
 t6=Text(app4,text="password or user name must be filled in ")
 tb5=PushButton(app4,text="Ok",command=signUp)
 t7=Text(app5,text="Username is in use")
-tb6=PushButton(app5,text="Ok",command=signUp)
-exit4=PushButton(app6,text="Exit",command=close)
+b6=PushButton(app5,text="Ok",command=signUp)
 t9=Text(app7)
 b4=PushButton(app6,text="add income",command=incomescreen)
 t8=Text(app6)
 t10=Text(app7,text="you should type in the amount of income \ngotten and when you got it \nand if you want a description")
 t11=Text(app7,text="income")
-tb5=TextBox(app7)
+tb=TextBox(app7)
 t12=Text(app7,text="Date")
 tb6=TextBox(app7)
 t13=Text(app7,text="Description")
 tb7=TextBox(app7)
 add=PushButton(app7,text="Add the income",command=income)
 exit5=PushButton(app7,text="Exit",command=close)
+t8=Text(app8,text="password already used")
+tb8=PushButton(app8,text="Ok",command=signUp)
+t9=Text(app9,text="Must input income and date atleats")
+tb9=PushButton(app9,text="Ok",command=incomescreen)
+b5=PushButton(app6,text="Add expensives",command=expensesscreen)
+exit4=PushButton(app6,text="Exit",command=close)
+
+t14=Text(app10,text="Add your expenses the \ndate you paid it and if\n you want a description")
+t15=Text(app10,text="Expenses")
+tb10=TextBox(app10)
+t16=Text(app10,text="date")
+tb11=TextBox(app10)
+t17=Text(app10,text="description")
+tb12=TextBox(app10)
+b6=PushButton(app10,text="Expenses",command=expenses)
+
 app5.hide()
+app8.hide()
+app10.hide()
+app11.hide()
 app6.hide()
 app7.hide()
 app4.hide()
+app9.hide()
 app2.hide()
 app3.hide()
 app.display()

@@ -204,8 +204,9 @@ def show():
         d=ws4.cell(row=row_pow,column=4).value
         e=ws4.cell(row=row_pow,column=5).value
         f=ws4.cell(row=row_pow,column=6).value
-        if (a!=None and b!=None and c2!=None) or (d!=None and e!=None and f!=None):
+        if a!=None and b!=None and c2!=None:
             lst.append(a+","+b+","+c2)
+        if d!=None and e!=None and f!=None:
             lst2.append(d+","+e+","+f)
 
 
@@ -269,6 +270,7 @@ lst=ListBox(app12,width=120,height="fill")
 t19=Text(app12,text="Expenses,\ndate and description")
 lst2=ListBox(app12,width=120,height="fill")
 home5=PushButton(app12,text="Home screen",command=loggedIn)
+exit6=PushButton(app12,text="Exit",command=close)
 
 app5.hide()
 app12.hide()

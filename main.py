@@ -17,6 +17,7 @@ app8=Window(app,title="Error",height=50,width=300)
 app9=Window(app,title="Error",height=50,width=300)
 app10=Window(app,title="Expenses")
 app11=Window(app,title="Error",height=50,width=300)
+app12=Window(app,title="show")
 
 def signUp():
     app4.hide()
@@ -74,9 +75,20 @@ def close():
     exit()
 
 def home():
+    app5.hide()
+    app12.hide()
+    app8.hide()
+    app10.hide()
+    app11.hide()
+    app6.hide()
+    app7.hide()
+    app4.hide()
+    app9.hide()
     app2.hide()
     app3.hide()
     app.show()
+    tb3.clear()
+    tb4.clear()
 
 def loginScreen():
     app.hide()
@@ -113,6 +125,11 @@ def login():
         app6.show()
         app3.hide()
 
+def loggedIn():
+    app6.show()
+    app7.hide()
+    app12.hide()
+    app10.hide()
 
 def incomescreen():
     app6.hide()
@@ -127,8 +144,8 @@ def income():
         if tb7.value=="":
             tb7.append(text="No Description")
         t=0
-        wb3=openpyxl.load_workbook(t8.value+".xlsx")
-        ws2=wb3.active
+        wb2=openpyxl.load_workbook(t8.value+".xlsx")
+        ws2=wb2.active
         for row_p in range(1,ws2.max_row+1):
             a=ws2.cell(row=row_p,column=1).value
             b=ws2.cell(row=row_p,column=2).value
@@ -140,7 +157,7 @@ def income():
             if c==None and t==0 :
                 ws2.cell(row=row_p,column=3,value=tb7.value)
             ws2.cell(row=row_p+1,column=1,value=" ")
-            wb3.save(t8.value+".xlsx")
+            wb2.save(t8.value+".xlsx")
         tb5.clear()
         tb6.clear()
         tb7.clear()
@@ -175,6 +192,23 @@ def expenses():
         tb11.clear()
         tb12.clear()
 
+def show():
+    app6.hide()
+    app12.show()
+    wb4=openpyxl.load_workbook(t8.value+".xlsx")
+    ws4=wb4.active
+    for row_pow in range(1,ws4.max_row+1):
+        a=ws4.cell(row=row_pow,column=1).value
+        b=ws4.cell(row=row_pow,column=2).value
+        c2=ws4.cell(row=row_pow,column=3).value
+        d=ws4.cell(row=row_pow,column=4).value
+        e=ws4.cell(row=row_pow,column=5).value
+        f=ws4.cell(row=row_pow,column=6).value
+        if (a!=None and b!=None and c2!=None) or (d!=None and e!=None and f!=None):
+            lst.append(a+","+b+","+c2)
+            lst2.append(d+","+e+","+f)
+
+
 t1=Text(app,text="Do you have an account")
 b1=PushButton(app,text="I do not have a account and would like to join",command=signUp)
 b2=PushButton(app,text="i have an acount and would like to log in",command=loginScreen)
@@ -182,7 +216,7 @@ exits=PushButton(app,text="Exit",command=close)
 t2=Text(app2,text="Type the user nane and password you would like below\nUsername")
 tb1=TextBox(app2)
 t3=Text(app2,text="Password")
-tb2=TextBox(app2)
+tb2=TextBox(app2,hide_text=True)
 b3=PushButton(app2,text="sign up",command=saved)
 home1=PushButton(app2,text="Home screen",command=home)
 log=PushButton(app2,text="login screen",command=loginScreen)
@@ -190,12 +224,12 @@ exit2=PushButton(app2,text="Exit",command=close)
 t4=Text(app3,text="type in your username and password below to log in\nusername")
 tb3=TextBox(app3)
 t5=Text(app3,text="password")
-tb4=TextBox(app3)
+tb4=TextBox(app3,hide_text=True)
 b3=PushButton(app3,text="login",command=login)
 home2=PushButton(app3,text="Home screen",command=home)
 exit3=PushButton(app3,text="Exit",command=close)
 t6=Text(app4,text="password or user name must be filled in ")
-tb5=PushButton(app4,text="Ok",command=signUp)
+b5=PushButton(app4,text="Ok",command=signUp)
 t7=Text(app5,text="Username is in use")
 b6=PushButton(app5,text="Ok",command=signUp)
 t9=Text(app7)
@@ -203,18 +237,21 @@ b4=PushButton(app6,text="add income",command=incomescreen)
 t8=Text(app6)
 t10=Text(app7,text="you should type in the amount of income \ngotten and when you got it \nand if you want a description")
 t11=Text(app7,text="income")
-tb=TextBox(app7)
+tb5=TextBox(app7)
 t12=Text(app7,text="Date")
 tb6=TextBox(app7)
 t13=Text(app7,text="Description")
 tb7=TextBox(app7)
 add=PushButton(app7,text="Add the income",command=income)
+home3=PushButton(app7,text="Home screen",command=loggedIn)
 exit5=PushButton(app7,text="Exit",command=close)
 t8=Text(app8,text="password already used")
 tb8=PushButton(app8,text="Ok",command=signUp)
 t9=Text(app9,text="Must input income and date atleats")
 tb9=PushButton(app9,text="Ok",command=incomescreen)
 b5=PushButton(app6,text="Add expensives",command=expensesscreen)
+b6=PushButton(app6,text="to show all incomes and expenses",command=show)
+home6=PushButton(app6,text="Home",command=home)
 exit4=PushButton(app6,text="Exit",command=close)
 
 t14=Text(app10,text="Add your expenses the \ndate you paid it and if\n you want a description")
@@ -224,9 +261,17 @@ t16=Text(app10,text="date")
 tb11=TextBox(app10)
 t17=Text(app10,text="description")
 tb12=TextBox(app10)
-b6=PushButton(app10,text="Expenses",command=expenses)
+b7=PushButton(app10,text="Expenses",command=expenses)
+home4=PushButton(app10,text="Home screen",command=loggedIn)
+
+t18=Text(app12,text="Income,date \nand description")
+lst=ListBox(app12,width=120,height="fill")
+t19=Text(app12,text="Expenses,\ndate and description")
+lst2=ListBox(app12,width=120,height="fill")
+home5=PushButton(app12,text="Home screen",command=loggedIn)
 
 app5.hide()
+app12.hide()
 app8.hide()
 app10.hide()
 app11.hide()

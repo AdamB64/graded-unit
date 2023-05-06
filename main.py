@@ -192,6 +192,7 @@ def login():
 #a function to take the user to the start screen
 def loggedIn():
     app6.show()
+    app16.hide()
     app7.hide()
     app12.hide()
     app10.hide()
@@ -246,7 +247,7 @@ def income():
             else:
 
                 day,mounth,year=tb6.value.split("/")
-                if (len(day)!=2 and day.isnumeric()==False) and (len(mounth)!=2 and mounth.isnumeric()==False) and (len(year)!=4 and year.isnumeric()==False):
+                if (len(day)!=2 or day.isnumeric()==False) or (len(mounth)!=2 or mounth.isnumeric()==False) or (len(year)!=4 or year.isnumeric()==False):
                     app7.hide()
                     app13.show()
                 else:
@@ -397,12 +398,12 @@ def howclose():
             if ws2.cell(row=row_pow,column=4).value is not None:
                 expenses_Num=expenses_Num+int(ws2.cell(row=row_pow,column=4).value)
     c=income_Num-expenses_Num
-    
-    if c ==0 or int(ws2.cell(row=1,column=7).value)==0:
+
+    if c ==0 or (int(ws2.cell(row=1,column=7).value))==0 or int(ws2.cell(row=1,column=7).value) is None:
         t27.clear()
         t27.append(text="can not times by zero")
     else:
-        b=(int(ws2.cell(row=1,column=7).value)/c)*100
+        b=(c/int(ws2.cell(row=1,column=7).value))*100
         t27.clear()
         t27.append(text="You are " + str(b) +"% to your goal")
 
@@ -483,6 +484,8 @@ home6=PushButton(app6,text="start screen",command=home)
 exit4=PushButton(app6,text="Exit",command=close)
 t27=Text(app16)
 t8=Text(app6)
+home7=PushButton(app16,text="Home screen",command=loggedIn)
+exit5=PushButton(app16,text="Exit",command=close)
 #to display the main screen and hide all the other screens so they only pop up after being called on
 app5.hide()
 app13.hide()

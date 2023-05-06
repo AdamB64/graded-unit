@@ -13,7 +13,6 @@
 #import all the libarys i need 
 from guizero import *
 import openpyxl
-import re
 
 #to load up the users worksheet
 wb = openpyxl.load_workbook('users.xlsx')
@@ -239,7 +238,6 @@ def expensesscreen():
 
 #a function that takes the users expenses date and if inputted description and saves it to a personal .xlsx file of the users
 def expenses():
-    date_pattern=r"^\d{2}/\d{2}/\d{4}$"
     if tb10.value==  "" or tb11.value=="":
         app10.hide()
         app11.show()

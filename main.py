@@ -247,11 +247,7 @@ def income():
             else:
 
                 day,mounth,year=tb6.value.split("/")
-                if (len(day)!=2 or day.isnumeric()==False) or (len(mounth)!=2 or mounth.isnumeric()==False) or (len(year)!=4 or year.isnumeric()==False):
-                    app7.hide()
-                    app13.show()
-                else:
-
+                if (len(day)==2 and day.isnumeric()==True) and (len(mounth)==2 and mounth.isnumeric()==True) and (len(year)==4 and year.isnumeric()==True):
                     if tb7.value=="":
                         tb7.append(text="No Description")
                         wb2=openpyxl.load_workbook(t8.value+".xlsx")
@@ -270,8 +266,11 @@ def income():
                                     ws2.cell(row=row_p + 1, column=1, value="new row")
                                     wb2.save(t8.value + ".xlsx")
                                     break
+                else:
+                    app7.hide()
+                    app13.show()
 
-            wb2.save(t8.value+".xlsx")
+        wb2.save(t8.value+".xlsx")
         tb5.clear()
         tb6.clear()
         tb7.clear()

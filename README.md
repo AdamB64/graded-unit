@@ -11,7 +11,7 @@ after that it should be ready to run with everything downloaded.
  
 2.then go to the home screen and then the login screen or straight to the login screen from the sign-up screen and use the username and password to log in.
  
-	3.Once logged in you can either add some income with the date and a description if needed.
+3.Once logged in you can either add some income with the date and a description if needed.
  
  
 4. you can also set expenses and date and description if needed.
